@@ -3,15 +3,38 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [                
-        {
-            "type": "lldb",
+    "configurations": [
+        { //配置Cortex-Debug需要的信息
+            //没问题
+            "name": "linux_pyocd",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/build/Debug/stm32h750-cmake.elf", //TODO
             "request": "launch",
-            "name": "Debug",
-            "program": "${workspaceFolder}/build/Debug/function_test",
-            "args": [],                       
-            "stopOnEntry": false,
-            "cwd": "${workspaceFolder}"
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "targetId": "STM32F103ZE",
+            "servertype": "pyocd",
+            "serverpath": "/usr/sbin/pyocd",
+            "armToolchainPath": "/usr/sbin/",
+            "svdFile": "${workspaceFolder}/STM32H750.svd", //TODO 用于调试的时候查看寄存器的内容
+            "gdbPath": "C:/Program Files/arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi/bin/arm-none-eabi-gdb", //TODO 是否不需要
+            //"cmsisPack": "${workspaceRoot}/Keil.STM32H7xx_DFP.3.1.1.pack",//TODO 验证F103不屏蔽该语句，会导致调试频繁出错误
+            "showDevDebugOutput": "parsed", //可选
+        },
+        {
+            "name": "win_pyocd", //Debug名称，需要与其它调试json命名不一致
+            "cwd": "${workspaceRoot}", //工作区根目录
+            "executable": "${workspaceRoot}/build/Debug/stm32h750-cmake.elf", //TODO 执行文件            
+            "request": "launch", //调试模式
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "targetId": "STM32F103ZE", //目标
+            "servertype": "pyocd",
+            "serverpath": "C:/Users/yyf/AppData/Local/Programs/Python/Python312/Scripts/pyocd.exe",
+            "armToolchainPath": "C:/Program Files/arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi/bin",
+            "svdFile": "${workspaceFolder}/STM32H750.svd",
+            "cmsisPack": "${workspaceFolder}/Keil.STM32H7xx_DFP.3.1.1.pack",
+            "showDevDebugOutput": "raw",
         }
     ]
 }
